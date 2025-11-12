@@ -94,7 +94,6 @@ int main(int argc, char* argv[])
             {
                 a.edit_file(a.add_file(fi), a.retrieve_tag(ta), 0);
             }
-
         }
         else if(input == 4)
         {
@@ -126,16 +125,11 @@ int main(int argc, char* argv[])
                 a.filter_files(a.retrieve_tag(ta), 0);
             }
             std::cout << '\n';
-
         }
         else if(input == 5)
         {
             break;
         }
-
     }
-
     save_library(a, lib_file);
-
-
 }
