@@ -21,9 +21,11 @@ class library
     
     ~library();
 
-    void add_file(const std::string &path);
+    void update_seen_files();
 
-    void edit_file(int idx);
+    file* add_file(const std::string &path);
+
+    void edit_file(file* f, tag* t, bool add);
 
     void filter_files(tag* tofind,const bool &add);
 
@@ -34,6 +36,8 @@ class library
     tag* retrieve_tag(const std::string &name);
 
     void show();
+
+    std::vector<tag*> current_filter() const;
 
     std::vector<file*> get_files() const;
     

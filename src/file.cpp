@@ -5,8 +5,6 @@
 #include "../include/file.hpp"
 #include "../include/tag.hpp"
 
-    file::file(const std::string &patt) : path(patt){}
-
     /// @brief Changes the path for the file. (Doesn't move the file)
     /// @param a New path to be registered.
     void file::set_path(const std::string &a){this->path = a;}

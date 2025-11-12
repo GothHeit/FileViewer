@@ -8,9 +8,9 @@ class library;
 
 
 
-void save_library(library*);
+void save_library(const library &lib, const std::string &filename);
 
-void load_library();
+void load_library(library &lib, const std::string &filename);
 
 
 #endif
