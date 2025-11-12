@@ -5,14 +5,14 @@
 #include "../include/file.hpp"
 #include "../include/tag.hpp"
 
-    tag::tag(const std::string &id){this->id = id;}
+    explicit tag::tag(const std::string const &id) : id(id) {}
     
     /// @brief Gets the files this tag contains as paths.
     /// @return A vector of strings with the paths to such files.
     std::vector<std::string> tag::paths_to_files() const
     {
         std::vector<std::string> out;
-        for (auto& a : this->has_tag)
+        for (const file* a : this->has_tag)
         { 
             out.push_back(a->get_path());
         }
@@ -49,4 +49,12 @@
                 return;
             }
         }  
+    }
+
+    tag::~tag()
+    {
+        for(file* f : this->has_tag)
+        {
+            f->remove_tag(this);
+        }   
     }

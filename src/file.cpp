@@ -5,6 +5,9 @@
 #include "../include/file.hpp"
 #include "../include/tag.hpp"
 
+    explicit file::file(const std::string const &patt) : path(patt) {}
+
+
     /// @brief Changes the path for the file. (Doesn't move the file)
     /// @param a New path to be registered.
     void file::set_path(const std::string &a){this->path = a;}
@@ -55,7 +58,7 @@
     /// @return A boolean describing whether the file contains said tag.
     bool file::tagged(const tag* t) const
     {
-        for(auto &ta : this->get_tags())
+        for(tag*& ta : this->get_tags())
         {
             if(ta == t){return true;}
         }

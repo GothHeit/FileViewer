@@ -8,12 +8,12 @@ class tag;
 
 class file
 {
-    std::string path = "NULL";
+    std::string path;
     std::vector<tag*> tags;
 
 public:
 
-    explicit file(const std::string &patt) : path(patt) {}
+    file(const std::string const &patt);
 
     void set_path(const std::string &a);
     std::string get_path() const;

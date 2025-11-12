@@ -64,7 +64,7 @@ static std::string unescape(const std::string &input)
 ///@param input The line to be split
 ///@param delimiters the paramater to split the line (a space by default)
 ///@return A vector of strings with the input minus the delimiter parameter
-std::vector<std::string> split_tag_line(std::string input, std::string delimiters="\""){
+static std::vector<std::string> split_tag_line(std::string input, std::string delimiters="\""){
         std::vector<std::string> out{};
         std::string calma{};
         
@@ -97,7 +97,7 @@ std::vector<std::string> split_tag_line(std::string input, std::string delimiter
         return out;
 }
 
-void save_library(const library &lib, const std::string &filename)
+void save_library(const library const &lib, const std::string const &filename)
 {
     std::ofstream out(filename);  
     if(!out)
@@ -142,7 +142,7 @@ void save_library(const library &lib, const std::string &filename)
     out.close();
 }
 
-void load_library(library &lib, const std::string &filename)
+void load_library(library &lib, const std::string const &filename)
 {
     std::ifstream in(filename);
     if(!in)

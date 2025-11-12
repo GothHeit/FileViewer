@@ -11,13 +11,15 @@ class tag
     public:
     
     std::string id;
-    std::vector<file*> has_tag{};
+    std::vector<file*> has_tag;
 
-    tag(const std::string &id);
+    explicit tag(const std::string const &id);
     std::vector<std::string> paths_to_files() const;
     std::vector<file*> get_files() const;
     void add_file(file* f);
     void remove_file(const file* f);
+
+    ~tag();
 };
 
 #endif
