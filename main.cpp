@@ -45,7 +45,9 @@ int main(int argc, char* argv[])
             std::string fi;
             std::string ta;
             std::cin >> fi;
-            
+
+            std::cout << '\n';
+
             std::cout << "Included tags in this file: ";
             
             for(tag* t : a.add_file(fi)->get_tags())
@@ -56,6 +58,7 @@ int main(int argc, char* argv[])
             std::cout << "\nChoose a tag to remove or \"Cancel\" to stop the action.\n";
             
             std::cin >> ta;
+            std::cout << '\n';
             if(ta != "Cancel")
             {
                 a.edit_file(a.add_file(fi), a.retrieve_tag(ta), 0);
@@ -71,12 +74,13 @@ int main(int argc, char* argv[])
             {
                 std::cout << t->id << " ";   
             }
-            std::cout << "do you wish to\n";
+            std::cout << "\ndo you wish to\n";
             std::cout << "1. add a tag\n";
             std::cout << "2. remove a tag\n";
             std::cout << "3. cancel action\n";
 
             std::cin >> ta;
+            std::cout << '\n';
 
             if(ta == "1")
             {
@@ -90,6 +94,8 @@ int main(int argc, char* argv[])
                 std::cin >> ta;
                 a.filter_files(a.retrieve_tag(ta), 0);
             }
+            std::cout << '\n';
+
         }
         else if(input == 5)
         {
