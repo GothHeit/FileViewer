@@ -1,19 +1,50 @@
-#include <bits/stdc++.h>
-#include "include/saving.hpp"
-#include "include/tag.hpp"
-#include "include/file.hpp"
-#include "include/library.hpp"
+#include <iostream>
+#include <filesystem>
+
+#include "../include/saving.hpp"
+#include "../include/tag.hpp"
+#include "../include/file.hpp"
+#include "../include/library.hpp"
 
 
 int main(int argc, char* argv[])
 {
     library a;
+    std::string existing_libs = "libs/";
+    std::string lib_file;
+    std::cout << "1. Create a new library from scratch\n";
+    std::cout << "2. Open an existing library\n";
 
-    if(argc > 1)
     {
-        std::string file = std::string(argv[1]);
-        std::cout << file << '\n';
-        load_library(a, file);
+        std::string inp;
+        std::cin >> inp;
+        if(inp == "1")
+        {
+                std::cout << "How should your library be called?\n";
+                std::cin >> lib_file;
+                lib_file = existing_libs + lib_file + ".json";
+        }
+        if(inp == "2")
+        {
+            std::cout << "\n";
+            int count=0;
+            std::vector<std::string> files;
+            for(const auto& a : std::filesystem::directory_iterator(existing_libs))
+            {
+                count++;
+                std::cout << count << ". " << a.path() << '\n';
+                files.push_back(a.path());
+            }
+            std::cout << "Input the index: ";
+            std::cin >> inp;
+            {
+                int idx = inp[0] - '0';
+                std::cout << idx << "\n";
+                load_library(a, files[idx-1]);
+                lib_file = files[idx-1];
+            }
+
+        }
     }
 
     int input;
@@ -104,7 +135,7 @@ int main(int argc, char* argv[])
 
     }
 
-    save_library(a, "teste.json");
+    save_library(a, lib_file);
 
 
 }
