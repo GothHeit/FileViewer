@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
             std::cout << "\n";
             int count=0;
             std::vector<std::string> files;
-            for(const auto& a : std::filesystem::directory_iterator(existing_libs))
+            for(const std::filesystem::directory_entry &a : std::filesystem::directory_iterator(existing_libs))
             {
                 count++;
                 std::cout << count << ". " << a.path() << '\n';
@@ -38,8 +38,11 @@ int main(int argc, char* argv[])
             std::cout << "Input the index: ";
             std::cin >> inp;
             {
-                int idx = inp[0] - '0';
-                std::cout << idx << "\n";
+                int idx = std::stoi(inp);
+                if(idx < 1 || idx > files.size())
+                {
+                    std::cout << "Invalid Index.\n";
+                }
                 load_library(a, files[idx-1]);
                 lib_file = files[idx-1];
             }
@@ -59,7 +62,10 @@ int main(int argc, char* argv[])
 
         if(input == 1)
         {
-            a.show();
+            for(const file* f : a.show())
+            {
+                std::cout << f->get_path() << "\n";
+            }
         }
         else if(input == 2)
         {
@@ -131,5 +137,4 @@ int main(int argc, char* argv[])
             break;
         }
     }
-    save_library(a, lib_file);
 }

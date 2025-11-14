@@ -13,7 +13,7 @@ class tag
     std::string id;
     std::vector<file*> has_tag;
 
-    explicit tag(const std::string const &id);
+    explicit tag(const std::string &id);
     std::vector<std::string> paths_to_files() const;
     std::vector<file*> get_files() const;
     void add_file(file* f);

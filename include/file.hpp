@@ -13,7 +13,7 @@ class file
 
 public:
 
-    file(const std::string const &patt);
+    explicit file(const std::string &patt);
 
     void set_path(const std::string &a);
     std::string get_path() const;

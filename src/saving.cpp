@@ -6,17 +6,18 @@
 #include <algorithm>
 #include <string>
 #include <fstream>
+#include <iostream>
 
 static std::string escape(const std::string &input)
 {
     std::string out;
 
-    for(char c : input)
+    for(const char c : input)
     {
-        if(c == '\"') // (") vira 
+        if(c == '\"') // (") becomes 
             out += "\\\""; // (\")
         
-        else if(c == '\\') // (\) vira
+        else if(c == '\\') // (\) becomes
             out += "\\\\"; // (\\)
         else
             out += c;
@@ -28,7 +29,7 @@ static std::string unescape(const std::string &input)
 {
     std::string out;
     bool barramode = false;
-    for (char c : input)
+    for (const char c : input)
     { 
         if(barramode)
         {
@@ -64,7 +65,7 @@ static std::string unescape(const std::string &input)
 ///@param input The line to be split
 ///@param delimiters the paramater to split the line (a space by default)
 ///@return A vector of strings with the input minus the delimiter parameter
-static std::vector<std::string> split_tag_line(std::string input, std::string delimiters="\""){
+static std::vector<std::string> split_tag_line(const std::string &input, const std::string &delimiters="\""){
         std::vector<std::string> out{};
         std::string calma{};
         
@@ -73,42 +74,42 @@ static std::vector<std::string> split_tag_line(std::string input, std::string de
         int size = input.size();
         for(int i=0; i<size; ++i)
             {
-            if(!between_tags && (delimiters.find(input[i])==std::string::npos || input[i-1] == '\\'))
-            {
-                calma+=input[i];        
-                if(i==size-1)
-                   out.push_back(unescape(calma));
-            }
-            else
-            {
-                if(between_tags && input[i] == '\"')
+                if(!between_tags && (delimiters.find(input[i])==std::string::npos || input[i-1] == '\\'))
                 {
-                    between_tags  = false;
-                    continue;
+                    calma+=input[i];        
+                    if(i==size-1)
+                        out.push_back(unescape(calma));
                 }
-                between_tags = true;
+                else
+                {
+                    if(between_tags && input[i] == '\"')
+                    {
+                        between_tags  = false;
+                        continue;
+                    }
+                    between_tags = true;
 
-                if(calma.size() > 0)
-                out.push_back(unescape(calma));
-                calma.clear();
-            
+                    if(calma.size() > 0)
+                        out.push_back(unescape(calma));
+                    calma.clear();
+                }
             }
-        }
         return out;
 }
 
-void save_library(const library const &lib, const std::string const &filename)
+void save_library(const library &lib, const std::string &filename)
 {
     std::ofstream out(filename);  
     if(!out)
     {
         return;
     }   
-
+    
+    
     out << "{\n";
     out << "    \"files\": [\n";
     bool firstfile = true;
-    for(auto &f : lib.get_files())
+    for(const file* f : lib.get_files())
     {        
         if(!firstfile)
         {
@@ -119,8 +120,10 @@ void save_library(const library const &lib, const std::string const &filename)
         out << escape(f->get_path());
         out << "\",\n";
         out << "        \"tags\": [";
+        
         bool firsttag = true;
-        for(auto &t : f->get_tags())
+        
+        for(const tag* t : f->get_tags())
         {
             if(!firsttag)
             {
@@ -130,10 +133,12 @@ void save_library(const library const &lib, const std::string const &filename)
             out << "\"";
             out << escape(t->id) << "\"";
         }
+        
         out << "]\n";
         firstfile = false;
         out << "      }";
     }
+    
     out << "\n";
     out << "    ]\n";
     out << "}";
@@ -142,7 +147,7 @@ void save_library(const library const &lib, const std::string const &filename)
     out.close();
 }
 
-void load_library(library &lib, const std::string const &filename)
+void load_library(library &lib, const std::string &filename)
 {
     std::ifstream in(filename);
     if(!in)
@@ -178,7 +183,7 @@ void load_library(library &lib, const std::string const &filename)
 
         std::vector<std::string> tags = split_tag_line(text.substr( posinicio+2, posfim - posinicio - 3 ));
 
-        for(std::string t : tags)
+        for(const std::string t : tags)
         {            
             lib.edit_file(f, lib.retrieve_tag(t), 1);
         }

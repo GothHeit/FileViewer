@@ -5,7 +5,7 @@
 #include "../include/file.hpp"
 #include "../include/tag.hpp"
 
-    explicit tag::tag(const std::string const &id) : id(id) {}
+    tag::tag(const std::string &id) : id(id) {}
     
     /// @brief Gets the files this tag contains as paths.
     /// @return A vector of strings with the paths to such files.
@@ -27,7 +27,7 @@
     /// @param f File to be added.
     void tag::add_file(file* f)
     {
-        for(auto& fi : this->has_tag)
+        for(const file* fi : this->has_tag)
         {
             if(fi->get_path() == f->get_path())
             {

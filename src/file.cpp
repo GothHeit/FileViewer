@@ -5,7 +5,7 @@
 #include "../include/file.hpp"
 #include "../include/tag.hpp"
 
-    explicit file::file(const std::string const &patt) : path(patt) {}
+    file::file(const std::string &patt) : path(patt) {}
 
 
     /// @brief Changes the path for the file. (Doesn't move the file)
@@ -80,3 +80,5 @@
     {
         return !(*this==b);
     }
+
+    

@@ -79,7 +79,7 @@
             }
         }
         
-        for(tag* ta : this->seen_tags)
+        for(const tag* ta : this->seen_tags)
         {
             std::unordered_set<file*> temp;
             for(file* f : out)
@@ -135,6 +135,11 @@
     {
         return lib_files;
     }
+    
+    const std::vector<tag*>& library::get_tags() const
+    {
+        return tags;
+    }
 
     const std::vector<tag*>& library::current_filter() const
     {
@@ -148,9 +153,10 @@
 
     library::~library()
     {
+        for (tag*& t : tags)
+            delete t;
+            
         for (file*& f : lib_files)
             delete f;
 
-        for (tag*& t : tags)
-            delete t;
     }

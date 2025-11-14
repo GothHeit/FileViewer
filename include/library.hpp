@@ -22,7 +22,7 @@ class library
     
     void update_seen_files();
     
-    file* add_file(const std::string const &path);
+    file* add_file(const std::string &path);
     
     void edit_file(file* f, tag* t, const bool add);
     
