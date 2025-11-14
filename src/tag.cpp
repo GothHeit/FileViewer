@@ -51,10 +51,13 @@
         }  
     }
 
+
+
     tag::~tag()
     {
         for(file* f : this->has_tag)
         {
-            f->remove_tag(this);
+            if(f != nullptr)
+                f->remove_tag(this);
         }   
     }

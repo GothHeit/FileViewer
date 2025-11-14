@@ -153,6 +153,7 @@
 
     library::~library()
     {
+        
         for (tag*& t : tags)
             delete t;
             

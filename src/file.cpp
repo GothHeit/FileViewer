@@ -40,7 +40,8 @@
             if(this->tags[i]->id == t->id)
             {
                 this->tags.erase(this->tags.begin() + i);
-                t->remove_file(this);
+                if(t != nullptr)
+                    t->remove_file(this);
                 return;
             }
         }
@@ -81,4 +82,10 @@
         return !(*this==b);
     }
 
-    
+    file::~file()
+    {
+        for(tag* t : this->get_tags())
+        {
+            this->remove_tag(t);
+        }
+    }
