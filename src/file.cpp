@@ -22,7 +22,7 @@
     {
         for(auto& ta : this->tags)
         {
-            if(ta->id == t->id)
+            if(ta->get_id() == t->get_id())
             {
                 return;
             }
@@ -30,30 +30,14 @@
         this->tags.push_back(t);
         t->add_file(this);
     }
-
-    /// @brief Removes a tag from the file. (And calls the remotion of the file from the tag)
-    /// @param t Tag to be removed from the file.
-    void file::remove_tag(tag* t)
-    {
-        for(size_t i=0; i<this->tags.size(); ++i)
-        {
-            if(this->tags[i]->id == t->id)
-            {
-                this->tags.erase(this->tags.begin() + i);
-                if(t != nullptr)
-                    t->remove_file(this);
-                return;
-            }
-        }
-    }
-
+    
     /// @brief Gets the tags this file includes.
     /// @return A vector of pointers to the tags this file includes.
     std::vector<tag*> file::get_tags() const
     {
         return tags;
     }
-
+    
     /// @brief Verifies if the file contains a specific tag.
     /// @param t The tag to be checked.
     /// @return A boolean describing whether the file contains said tag.
@@ -65,7 +49,7 @@
         }
         return false;
     }
-
+    
     /// @brief Compares the file to another based on the path.
     /// @param b File to be compared with.
     /// @return A boolean describing whether the files are the same.
@@ -73,7 +57,7 @@
     {
         return this->get_path() == b.get_path();
     }
-
+    
     /// @brief Compares the file to another based on the path.
     /// @param b File to be compared with.
     /// @return A boolean describing whether the files are different.
@@ -81,11 +65,58 @@
     {
         return !(*this==b);
     }
+    
+    
+    
+    /// @brief Removes a tag from the file. (And calls the remotion of the file from the tag)
+    /// @param t Tag to be removed from the file.
+    void file::remove_tag(tag* t)
+    {
+        for(size_t i=0; i< this->tags.size(); ++i)
+        {
+            if(this->tags[i]->get_id() == t->get_id())
+            {
+                this->tags.erase(this->tags.begin() + i);
+                t->remove_file_unreciprocated(this);
+                return;
+            }
+        }
+    }
 
-    file::~file()
+    
+    void file::unlink_from_tags()
     {
         for(tag* t : this->get_tags())
         {
-            this->remove_tag(t);
+            t->remove_file(this);
         }
+        this->tags.clear();
+    }
+
+    void file::unlink_from_tags_unreciprocated()
+    {
+        for(tag* t : this->get_tags())
+        {
+            t->remove_file_unreciprocated(this);
+        }
+        this->tags.clear();
+    }
+    
+    void file::remove_tag_unreciprocated(tag* t)
+    {
+        for(int i=0; i<this->tags.size(); ++i)
+        {
+            if(this->tags[i] == t)
+            {
+                this->tags.erase(this->tags.begin() + i);
+                return;
+            }
+        }  
+    }
+    
+
+
+    file::~file()
+    {
+        unlink_from_tags_unreciprocated();
     }

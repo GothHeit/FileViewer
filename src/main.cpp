@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
             
             for(tag* t : a.add_file(fi)->get_tags())
             {
-                std::cout << t->id << " ";
+                std::cout << t->get_id() << " ";
             }
             
             std::cout << "\nChoose a tag to remove or \"Cancel\" to stop the action.\n";
@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
             std::cout << "current filter: ";
             for(tag* t : a.current_filter())
             {
-                std::cout << t->id << " ";   
+                std::cout << t->get_id() << " ";   
             }
             std::cout << "\ndo you wish to\n";
             std::cout << "1. add a tag\n";
@@ -137,4 +137,6 @@ int main(int argc, char* argv[])
             break;
         }
     }
+    save_library(a, lib_file);
+    return 0;
 }

@@ -131,7 +131,7 @@ void save_library(const library &lib, const std::string &filename)
             }
             firsttag = false;
             out << "\"";
-            out << escape(t->id) << "\"";
+            out << escape(t->get_id()) << "\"";
         }
         
         out << "]\n";

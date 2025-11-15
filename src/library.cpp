@@ -103,12 +103,12 @@
     {
         for(const tag* ta : this->tags)
         {
-            if(ta->id == a)
+            if(ta->get_id() == a)
             {
                 return 0;
             }
         }
-        t->id = a;
+        t->get_id() = a;
         return 1;
     }
 
@@ -123,7 +123,7 @@
     {
         for(tag* ta : tags)
         {
-            if(ta->id == name)
+            if(ta->get_id() == name)
             {
                 return ta;
             }
@@ -153,11 +153,14 @@
 
     library::~library()
     {
-        
-        for (tag*& t : tags)
+
+        for (tag* t : this->tags)
+        {
             delete t;
-            
-        for (file*& f : lib_files)
+        }
+        for (file* f : this->lib_files)
+        {
             delete f;
+        }
 
     }

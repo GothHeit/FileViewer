@@ -7,6 +7,11 @@
 
     tag::tag(const std::string &id) : id(id) {}
     
+    std::string tag::get_id() const
+    {
+        return id;
+    }
+
     /// @brief Gets the files this tag contains as paths.
     /// @return A vector of strings with the paths to such files.
     std::vector<std::string> tag::paths_to_files() const
@@ -29,7 +34,7 @@
     {
         for(const file* fi : this->has_tag)
         {
-            if(fi->get_path() == f->get_path())
+            if(fi == f)
             {
                 return;
             }
@@ -39,11 +44,24 @@
 
     /// @brief Removes a file from this tag.
     /// @param f File to be removed.
-    void tag::remove_file(const file* f)
+    void tag::remove_file(file* f)
     {
         for(int i=0; i<this->has_tag.size(); ++i)
         {
-            if(this->has_tag[i]->get_path() == f->get_path())
+            if(this->has_tag[i] == f)
+            {
+                this->has_tag.erase(this->has_tag.begin() + i);
+                f->remove_tag_unreciprocated(this);
+                return;
+            }
+        }  
+    }
+
+    void tag::remove_file_unreciprocated(const file* f)
+    {
+        for(int i=0; i<this->has_tag.size(); ++i)
+        {
+            if(this->has_tag[i] == f)
             {
                 this->has_tag.erase(this->has_tag.begin() + i);
                 return;
@@ -51,13 +69,23 @@
         }  
     }
 
-
-
-    tag::~tag()
+    void tag::unlink_from_files()
     {
         for(file* f : this->has_tag)
         {
-            if(f != nullptr)
-                f->remove_tag(this);
+            f->remove_tag(this);
         }   
+    }
+    
+    void tag::unlink_from_files_unreciprocated()
+    {
+        for(file* f : this->get_files())
+        {
+            f->remove_tag_unreciprocated(this);
+        }
+    }
+
+    tag::~tag()
+    {
+        unlink_from_files_unreciprocated();
     }

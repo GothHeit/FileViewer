@@ -11,7 +11,12 @@ class file
     std::string path;
     std::vector<tag*> tags;
 
+    void remove_tag_unreciprocated(tag* t);
+    void unlink_from_tags_unreciprocated();
+
 public:
+
+    friend class tag;
 
     explicit file(const std::string &patt);
 
@@ -26,6 +31,9 @@ public:
 
     bool operator==(const file &b) const;
     bool operator!=(const file &b) const;
+
+    void unlink_from_tags();
+    ~file();
 };
 
 #endif
