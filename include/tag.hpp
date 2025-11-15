@@ -10,7 +10,6 @@ class tag
 {
     
     void remove_file_unreciprocated(const file* f);   
-    void unlink_from_files_unreciprocated();
     
     std::string id;
     std::vector<file*> has_tag;

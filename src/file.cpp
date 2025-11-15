@@ -43,7 +43,7 @@
     /// @return A boolean describing whether the file contains said tag.
     bool file::tagged(const tag* t) const
     {
-        for(tag*& ta : this->get_tags())
+        for(tag* ta : this->tags)
         {
             if(ta == t){return true;}
         }
@@ -92,15 +92,6 @@
         }
         this->tags.clear();
     }
-
-    void file::unlink_from_tags_unreciprocated()
-    {
-        for(tag* t : this->get_tags())
-        {
-            t->remove_file_unreciprocated(this);
-        }
-        this->tags.clear();
-    }
     
     void file::remove_tag_unreciprocated(tag* t)
     {
@@ -118,5 +109,5 @@
 
     file::~file()
     {
-        unlink_from_tags_unreciprocated();
+        unlink_from_tags();
     }

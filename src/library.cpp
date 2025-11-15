@@ -2,7 +2,6 @@
 #include <vector>
 #include <algorithm>
 #include <unordered_set>
-#include <iostream>
 
 #include "../include/file.hpp"
 #include "../include/library.hpp"
@@ -154,13 +153,13 @@
     library::~library()
     {
 
-        for (tag* t : this->tags)
-        {
-            delete t;
-        }
         for (file* f : this->lib_files)
         {
             delete f;
+        }
+        for (tag* t : this->tags)
+        {
+            delete t;
         }
 
     }

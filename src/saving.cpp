@@ -6,7 +6,6 @@
 #include <algorithm>
 #include <string>
 #include <fstream>
-#include <iostream>
 
 static std::string escape(const std::string &input)
 {

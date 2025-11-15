@@ -42,7 +42,7 @@
         this->has_tag.push_back(f);
     }
 
-    /// @brief Removes a file from this tag.
+    /// @brief Removes a file from the tag (and the tag from the file).
     /// @param f File to be removed.
     void tag::remove_file(file* f)
     {
@@ -71,21 +71,13 @@
 
     void tag::unlink_from_files()
     {
-        for(file* f : this->has_tag)
+        for(file* f : this->get_files())
         {
             f->remove_tag(this);
         }   
     }
-    
-    void tag::unlink_from_files_unreciprocated()
-    {
-        for(file* f : this->get_files())
-        {
-            f->remove_tag_unreciprocated(this);
-        }
-    }
 
     tag::~tag()
     {
-        unlink_from_files_unreciprocated();
+        unlink_from_files();
     }

@@ -12,7 +12,6 @@ class file
     std::vector<tag*> tags;
 
     void remove_tag_unreciprocated(tag* t);
-    void unlink_from_tags_unreciprocated();
 
 public:
 
